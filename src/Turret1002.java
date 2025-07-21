@@ -1,10 +1,8 @@
 /*
-시간 제한	메모리 제한	제출	정답	맞힌 사람	정답 비율
-2 초	128 MB	239773	54610	42398	22.939%
+시간 제한	메모리 제한
+2 초	128 MB
 문제
 조규현과 백승환은 터렛에 근무하는 직원이다. 하지만 워낙 존재감이 없어서 인구수는 차지하지 않는다. 다음은 조규현과 백승환의 사진이다.
-
-
 
 이석원은 조규현과 백승환에게 상대편 마린(류재명)의 위치를 계산하라는 명령을 내렸다. 조규현과 백승환은 각각 자신의 터렛 위치에서 현재 적까지의 거리를 계산했다.
 
@@ -44,26 +42,59 @@ $1 ≤ r_1, r_2 ≤ 10\,000$ 
 2
 1
 0
+
+3
+0 0 5 0 0 6
+0 0 10 0 0 10
+1 1 5 4 5 5
+
+3
+1 0 1 5 0 5
+1 0 1 6 0 9
+1 0 5 6 0 5
+
  */
 
 import java.util.*;
 
 public class Turret1002 {
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         StringTokenizer st;
-        ArrayList<Integer> numList = new ArrayList<Integer>();
+        ArrayDeque<Integer> numList = new ArrayDeque<Integer>();
+        int x1, y1, r1, x2, y2, r2;
         int T = Integer.parseInt(sc.nextLine());
         for (int t = 0; t < T; t++){
             st = new StringTokenizer(sc.nextLine());
             while (st.hasMoreTokens()) {
                 numList.add(Integer.parseInt(st.nextToken()));
             }
-            System.out.println(numList);
+            x1 = numList.remove();
+            y1 = numList.remove();
+            r1 = numList.remove();
+            x2 = numList.remove();
+            y2 = numList.remove();
+            r2 = numList.remove();
+
+            if (x1 == x2 && y1 == y2) {
+                if (r1 == r2) {
+                    System.out.println(-1); // 답이 무한개.
+                } else {
+                    System.out.println(0); // 답이 0.
+                }
+            } else {
+                double distance = Math.sqrt(Math.pow(Math.abs(x2-x1), 2) + Math.pow(Math.abs(y2-y1), 2));
+                if (r1+r2 == distance ||  Math.abs(r2 - r1) == distance) {
+                    System.out.println(1);
+                } else if (r1 + r2 < distance || Math.abs(r2 - r1) > distance) {
+                    System.out.println(0);
+                } else {
+                    System.out.println(2);
+                }
+            }
+            numList.clear();
         }
-
     }
-
 }
